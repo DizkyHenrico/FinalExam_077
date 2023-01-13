@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Web Service</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    </head>
+    <body>
+        <div>Masukkan Data</div>
+        <hr>
+        <script>
+            //method Input Data (POST) 
+             const url = "http://localhost:8080/POST";
+            function post() {
+                let Id = document.getElementById("id").value;
+                let nik = document.getElementById("nik").value;
+                let nama = document.getElementById("nama").value;
+                let Tanggallahir = document.getElementById("tanggallahir").value;
+                let Photo = file.getElemenById("photo").value;
+                let Timestamp = datetime-local.getElemenById("timestamp").value;
+                let dataText = {"id": Id, "nik": nik, "nama": nama, "tanggallahir": Tanggallahir, "photo": Photo, "timestamp": Timestamp};
+                let dataJson = JSON.stringify(dataText);
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: dataJson,
+                    contentType: 'application/json',
+                    dataType: 'text',
+                    success: function (result) {
+                        console.log(result);
+                    }
+                });
+            }
+
+            //method Edit Data(PUT)
+            function put() {
+                const urlp = "http://localhost:8080/PUT";
+                let Id = document.getElementById("id").value;
+                let nik = document.getElementById("nik").value;
+                let nama = document.getElementById("nama").value;
+                let Tanggallahir = document.getElementById("tanggallahir").value;
+                let Photo = file.getElemenById("photo").value;
+                let Timestamp = datetime-local.getElemenById("timestamp").value;
+                let dataText = {"id": Id, "nik": nik, "nama": nama, "tanggallahir": Tanggallahir, "photo": Photo, "timestamp": Timestamp};
+                let dataJson = JSON.stringify(dataText);
+                $.ajax({
+                    url: urlp,
+                    method: 'PUT',
+                    data: dataJson,
+                    contentType: 'application/json',
+                    dataType: 'text',
+                    success: function (result) {
+                        console.log(result);
+                    }
+                });
+            }
+
+            //method Menampilkan Data (GET)
+            function get() {
+                const urlg = "http://localhost:8080/GET";
+                $.ajax({
+                    url: urlg,
+                    method: 'GET',
+                    dataType: 'text',
+                    success: function (result) {
+                        document.getElementById("viewer").innerHTML = result;
+                    }
+                });
+            }
+
+            //method Menghapus Data (DELETE)
+            function delID() {
+                const urlp = "http://localhost:8080/DELETE";
+                let editID = document.getElementById("id").value;
+                let dataText = {"id": editID};
+                let dataJson = JSON.stringify(dataText);
+                $.ajax({
+                    url: urlp,
+                    method: 'DELETE',
+                    data: dataJson,
+                    contentType: 'application/json',
+                    dataType: 'text',
+                    success: function (result) {
+                        console.log(result);
+                    }
+                });
+            }
+
+            //membuat Kolom Input dan function Button
+        </script>
+        <label>ID       : </Label><input type="text" id="id" name="id" > <br>
+        <label>Nik     : </Label><input type="text" id="nik" name="nik"> <br>
+        <label>Nama      : </Label><input type="text" id="nama" name="nama"> <br>
+        <label>Tanggallahir  : </Label><input type="date" id="tanggalahir" name="tanggallahir"> <br>
+        <label>Photo  : </Label><input type="file" id="photo" name="photo"> <br>
+        <label>Timestamp  : </Label><input type="datetime-local" id="timestamp" name="timestamp"> <br>
+        <hr>
+
+        <button onclick ="get()">Tampil Data</button> |
+        <button onclick ="post()">Tambah Data</button> |
+        <button onclick ="put()">Edit Data</button> |
+        <button onclick ="delID()">Hapus Data</button>
+        <hr>
+        <div id="viewer"></div>
+    </body>
+</html>
